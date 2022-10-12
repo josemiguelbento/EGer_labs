@@ -84,8 +84,8 @@ function bode_plot(data,name,TF)
     %gain = 20*log(data.v_ptp(:,2)./data.v_ptp(:,1));
     
     [min_value,closestIndex] = min(abs(data.f(:,2)-3800));
-    f = figure;
-    f.Position = [100 50 350 400];
+    
+    figure
     semilogx(2*pi*data.f(:,2),data.gain,'x','Color','red')
     hold on
     semilogx(2*pi*data.f(closestIndex,2),data.gain(closestIndex),'o','Color','g')
@@ -99,7 +99,7 @@ function bode_plot(data,name,TF)
         [mag,phase,wout] = bode(TF,2*pi*data.f(i,2));
         phase_arr = cat(1,phase_arr, phase);
     end
-    semilogx(2*pi*data.f(:,2),phase_arr,'x','Color','red')
+    semilogx(2*pi*data.(sheet).(channel).f,phase_arr,'x','Color','red')
     
     axes_handles = findall(0, 'type', 'axes');
     axes(axes_handles(3))

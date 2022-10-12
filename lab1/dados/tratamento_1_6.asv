@@ -132,13 +132,11 @@ function bode_plot(data,sheet,channel,name,TF)
     
     [min_value,closestIndex] = min(abs(data.(sheet).(channel).f-3800));
     
-    f = figure;
-    f.Position = [100 50 350 400];
-    
+    figure
     semilogx(2*pi*data.(sheet).(channel).f,data.(sheet).(channel).gain,'x','Color','red')
     hold on
     semilogx(2*pi*data.(sheet).(channel).f(closestIndex),data.(sheet).(channel).gain(closestIndex),'o','Color','g')
-    point_text = "f_0(Hz) = "+ string(data.(sheet).(channel).f(closestIndex)) + newline +"G(dB) = " + string(data.(sheet).(channel).gain(closestIndex));
+    point_text = "f_0(Hz) = 3800"+ newline +"G(dB) = " + string(data.(sheet).(channel).gain(closestIndex));
     text(2*pi*data.(sheet).(channel).f(closestIndex)*1.1,data.(sheet).(channel).gain(closestIndex)*1.1,point_text)
 
     %opts = bodeoptions;
@@ -147,12 +145,11 @@ function bode_plot(data,sheet,channel,name,TF)
     %opts.YLim = {[min(data.gain)-10,max(data.gain)+10],[-inf,inf]};
     %opts.YLimMode = {'manual'};
     bode(TF);
-    phase_arr = [];
     for i = 1:length(data.(sheet).(channel).f)
-        [mag,phase,wout] = bode(TF,2*pi*data.(sheet).(channel).f(i));
-        phase_arr = cat(1,phase_arr, phase);
+        angle(freqresp(TF,2*pi*data.(sheet).(channel).f(i))/pi*180;
     end
-    semilogx(2*pi*data.(sheet).(channel).f,phase_arr,'x','Color','red')
+    
+    semilogx(2*pi*data.(sheet).(channel).f,data.(sheet).(channel).gain,'x','Color','blue')
     axes_handles = findall(0, 'type', 'axes');
     axes(axes_handles(3))
     ylim([min(data.(sheet).(channel).gain)-10,max(data.(sheet).(channel).gain)+10])
