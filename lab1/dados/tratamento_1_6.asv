@@ -80,11 +80,11 @@ for i = 1:length(sheets)
     P2 = double(strrep(strrep(sheets(i),'R',''),'_','.'))*10^3;
     [k_theo,q_theo] = k_q_calc(P2);
     
-    k_vec = [P2 k_theo 10^(data.(sheets(i)).K/20)];
-    q_vec = [P2 q_theo 10^(data.(sheets(i)).Q/20)];
-    
-    K_pot = cat(1,K_pot,k_vec);
-    Q_pot = cat(1,Q_pot,q_vec);
+    k_vec = [p
+    K_pot = cat(2,K_pot,k_theo);
+    Q_pot = cat(2,Q_pot,q_theo.Q);
+    K_pot = cat(2,K_pot,data.(sheets(i)).K);
+    Q_pot = cat(2,Q_pot,data.(sheets(i)).Q);
 end
 %% Functions
 function file_struct = read_excel(filename)
@@ -231,7 +231,7 @@ function [K, Q] = k_q_calc(P2)
     C1 =	4.70E-09;
     C2 =	4.70E-09;
 
-    %K = ((R5+R2)*P2)/(R2*(R3+P2));
+    %k = ((R5+R2)*P2)/(R2*(R3+P2));
     %Q = 1/(((R5+R2)*R3)/(R2*(R3+P2)));
     %T = R6*C1;
     
