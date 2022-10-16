@@ -71,6 +71,15 @@ for i = 1:length(sheets)
     data.(sheets(i)).K = K;
     data.(sheets(i)).Q = Q;
 end
+
+%% Plot effect of variable resistance on K and Q
+K_pot = [];
+Q_pot = [];
+sheets = sheetnames(filename);
+for i = 1:length(sheets)
+    K_pot = cat(1,K_pot,data.(sheets(i)).K);
+    Q_pot = cat(1,Q_pot,data.(sheets(i)).Q);
+end
 %% Functions
 function file_struct = read_excel(filename)
     sheets = sheetnames(filename);
@@ -134,7 +143,6 @@ function bode_plot(data,sheet,channel,name,TF)
     
     f = figure;
     f.Position = [100 50 350 400];
-    
     semilogx(2*pi*data.(sheet).(channel).f,data.(sheet).(channel).gain,'x','Color','red')
     hold on
     semilogx(2*pi*data.(sheet).(channel).f(closestIndex),data.(sheet).(channel).gain(closestIndex),'o','Color','g')
