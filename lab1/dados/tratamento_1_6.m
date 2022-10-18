@@ -26,7 +26,8 @@ K_v3 = (v3_data.gain(1) + v3_data.gain(2))/2;
 % Consideramos para o valor de K a média dos ganhos obtidos nos filtros
 % passa-alto e passa-baixo para altas e baixas frequencias, respetivamente
 
-K = (K_v2+K_v3)/2;
+%K = (K_v2+K_v3)/2;
+K = 20*log10((10^(K_v2/20)+10^(K_v3/20))/2);
 
 % da expressao do passa-banda sai que o ganho quando s = j*w0, o ganho é
 % K/Q. Como K e Ganho máximo estão ambos em dB, a suaa divisão fica:
@@ -56,7 +57,8 @@ for i = 1:length(sheets)
     % Consideramos para o valor de K a média dos ganhos obtidos nos filtros
     % passa-alto e passa-baixo para altas e baixas frequencias, respetivamente
 
-    K = (K_v2+K_v3)/2;
+    %K = (K_v2+K_v3)/2;
+    K = 20*log10((10^(K_v2/20)+10^(K_v3/20))/2);
 
     % da expressao do passa-banda sai que o ganho quando s = j*w0, o ganho é
     % K/Q. Como K e Ganho máximo estão ambos em dB, a suaa divisão fica:
